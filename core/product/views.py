@@ -1,6 +1,7 @@
 from rest_framework import generics
 from .serializer import *
 from .models import *
+from django_filters.rest_framework import DjangoFilterBackend
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -31,7 +32,13 @@ class CategoryDeleteView(generics.DestroyAPIView):
     queryset= Category.objects.all()
     serializer_class = CategorySerializer
 
-# 
+
+
 class ProductCreateListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category__name']
+
+    # http://127.0.0.1:8000/api/products/?category__name =cloths
+    
