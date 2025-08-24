@@ -30,3 +30,8 @@ class CategoryUpdateView(generics.UpdateAPIView):
 class CategoryDeleteView(generics.DestroyAPIView):
     queryset= Category.objects.all()
     serializer_class = CategorySerializer
+
+# 
+class ProductCreateListView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
