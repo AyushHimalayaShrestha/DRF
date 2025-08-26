@@ -3,6 +3,7 @@ from .serializer import *
 from .models import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from .pagination import CustomPagination
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -38,6 +39,7 @@ class CategoryDeleteView(generics.DestroyAPIView):
 class ProductCreateListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    pagination_class= CustomPagination
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
     filterset_fields = ['category__name']
     # http://127.0.0.1:8000/api/products/?category__name =clothes

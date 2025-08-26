@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "product",
     'django_filters',
+    "accounts",
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
