@@ -4,15 +4,17 @@ from .models import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .pagination import CustomPagination
-
+from rest_framework.permissions import AllowAny,IsAuthenticated, IsAdminUser
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class =CategorySerializer
+    permission_classes = [AllowAny]
 
 # create new category
 class CategoryCreateView(generics.CreateAPIView):
     queryset =Category.objects.all()
     serializer_class= CategorySerializer
+    permission_classes = [IsAdminUser]
 
 
 # class CategoryListCreateView(generics.ListCreateAPIView):
@@ -23,16 +25,19 @@ class CategoryCreateView(generics.CreateAPIView):
 class CategoryRetrieveView(generics.RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
 
 # update category
 class CategoryUpdateView(generics.UpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
 
 # delete category
 class CategoryDeleteView(generics.DestroyAPIView):
     queryset= Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
 
 
 # create and get all product views
@@ -50,4 +55,8 @@ class ProductCreateListView(generics.ListCreateAPIView):
 
      # http://127.0.0.1:8000/api/products/?ordering = price & category_name= clothes
 
+    def get_permissions(self):
+        if self.request.method == "GET":
+           return [AllowAny()]
+        return[IsAdminUser()]
 
